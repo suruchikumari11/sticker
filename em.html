@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="gif.css">
+</head>
+<body>
+   <div id="container">
+     <div class="heading">
+       <h1>GIF Search</h1>
+     </div>
+     <div class="input1">
+        <input type="text"id="search1"placeholder="Enter search">
+        <button id="btn">Search</button>
+      </div>
+      <div id="gifcollection">
+
+      </div> 
+
+
+
+   </div>
+   <script>
+    const search=document.getElementById('search1');
+    const btn=document.getElementById('btn');
+    const gifbox=document.getElementById('gifcollection');
+
+    const api_key="iw7R7F3sYU7vAOqKnzJ5r9h6oK0kQcMg"
+    const apiurl="https://api.giphy.com/v1/gifs/search"
+    async function gif1(name)
+    {
+        const data1= await fetch(`${apiurl}?q=${name} &api_key=${api_key}&limit=45`);
+        const d= await data1.json()
+         console.log(d);
+        d.data.forEach((d1)=>{
+            const img = document.createElement('img');
+            img.src=d1.images.original.url;
+            gifbox.appendChild(img);
+        });
+    
+    
+    
+    }
+    btn.addEventListener('click',async()=>{
+        if(search1.value.trim() !=='')
+        {
+            gifbox.innerHTML='';
+            await gif1(search1.value);
+            search1.value='';
+
+        }
+        else{
+        gifbox.innerHTML='';
+        }
+    });
+     search1.addEventListener('keyup',async(e)=>{
+        if(e.key==='Enter'){
+            e.preventDefault();
+            if(search1.value.trim() !==''){
+                gifbox.innerHTML='';
+                await gif1(search1.value='');
+            }
+            else{
+                gifbox.innerHTML= '';
+            }
+        }
+     });
+
+    
+
+   </script> 
+</body>
+</html>
